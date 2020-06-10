@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"  android:orientation="vertical"
+    tools:context="com.example.ranashazib.braindrive.Second_Game_Instruction"
+    android:background="#f6f4ff"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:weightSum="1"
+        ></LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:weightSum="1"
+        android:background="#82a4fe"
+        >
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView8"
+            android:background="@drawable/memory1"
+            android:scaleType="centerCrop"
+            android:layout_weight="0.4"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Memorize It"
+            android:textSize="40dp"
+            android:id="@+id/textView16"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.6"
+            android:textStyle="italic" />
+
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Instruction"
+            android:id="@+id/textView18"
+            android:textSize="45dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#82a4fe" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28dp"
+            android:layout_marginTop="12dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="If the previous image matches the current image, tap Match. If     it does not match, tap No Match"
+            android:id="@+id/textView19" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.18"
+            >
+
+
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Skills"
+                android:id="@+id/textView20"
+                android:textSize="45dp"
+                android:layout_gravity="center"
+                android:textColor="#82a4fe"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton4"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ok_button" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Speed and Attention to Details"
+            android:id="@+id/textView21" />
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

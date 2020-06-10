@@ -1,0 +1,137 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgfirstg">
+
+
+
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:orientation="horizontal"
+android:layout_weight="0.1"
+android:baselineAligned="true">
+
+</LinearLayout>
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:layout_weight="0.6"
+android:orientation="horizontal"
+    android:background="@drawable/bg_gamelist">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:text="WELCOME !"
+    android:textSize="30dp"
+    android:gravity="center"
+    android:id="@+id/textView"
+    android:textStyle="bold|italic"
+    android:textColor="#80ffae" />
+
+
+
+
+
+</LinearLayout>
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_gravity="center"
+android:layout_weight="0.02"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Please Enter Your Name"
+        android:id="@+id/textView4"
+        android:layout_centerVertical="true"
+        android:textSize="25dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_weight="0.02"
+        >
+
+    <EditText
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/username"
+    android:layout_marginTop="40dp"
+    android:width="300dp"
+    android:layout_below="@+id/textView4"
+    android:layout_centerHorizontal="true" />
+
+
+</LinearLayout>
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_gravity="center"
+android:layout_weight="0.02">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/SaveInfo"
+        android:width="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp"
+        android:onClick="user_name" /></LinearLayout>
+
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="0dp"
+android:orientation="horizontal"
+android:layout_weight="0.3"
+    ></LinearLayout>
+
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_gravity="center"
+android:layout_weight="0.2
+            ">
+
+
+
+</LinearLayout>
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:orientation="horizontal"
+android:layout_weight="0.03"
+android:baselineAligned="true"
+android:background="@drawable/writing"></LinearLayout>
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:orientation="horizontal"
+android:layout_weight="0.1"
+android:baselineAligned="true"
+
+
+android:background="@drawable/red"></LinearLayout>
+
+
+
+
+
+    </LinearLayout>

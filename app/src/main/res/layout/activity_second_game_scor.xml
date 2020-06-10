@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"  android:orientation="vertical"
+        tools:context="com.example.ranashazib.braindrive.Second_game_scor"
+        android:background="#f6f4ff"
+        >
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:weightSum="1"
+            >
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:weightSum="1"
+            android:background="#82a4fe">
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="GAME SCORE"
+                android:textSize="35dp"
+                android:gravity="center"
+                android:id="@+id/textView13" />
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+
+
+
+
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView7"
+                android:gravity="center"
+
+                android:background="@drawable/youscored" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="40dp"
+                android:id="@+id/textView17"
+                android:gravity="center"
+                android:singleLine="false"
+                android:focusable="false"
+                android:enabled="false"
+                android:textColor="#44ff2c"
+                android:text="scor" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            >
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="40dp"
+                android:text="hello"
+                android:id="@+id/textView18"
+                android:singleLine="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:enabled="false"
+                android:textColor="#ffa222" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.18"
+            android:background="#82a4fe"
+            >
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/imageButton10"
+                android:background="@drawable/back_button1"
+                android:onClick="back"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.08">
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+    </LinearLayout>

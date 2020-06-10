@@ -1,0 +1,141 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+android:layout_height="match_parent"  android:orientation="vertical"
+tools:context="com.example.ranashazib.braindrive.Third_Game_Instruction"
+android:background="#f6f4ff"
+    >
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.1"
+    android:weightSum="1"
+    ></LinearLayout>
+
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.5"
+    android:weightSum="1"
+    android:background="@drawable/red"
+    >
+
+
+    <ImageView
+        android:layout_width="111dp"
+        android:layout_height="140dp"
+        android:id="@+id/imageView8"
+        android:background="@drawable/cat"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:layout_weight="0.22" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Catagorize It"
+        android:textSize="40dp"
+        android:id="@+id/textView16"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="0.6"
+        android:textStyle="italic" />
+
+</LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Instruction"
+        android:id="@+id/textView18"
+        android:textSize="45dp"
+
+        android:textColor="#ff9ba5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:layout_marginTop="2dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tap the button for category that the image fits into as quickly as possible"
+        android:id="@+id/textView19" />
+</LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.12"
+        >
+
+
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Skills"
+            android:id="@+id/textView20"
+            android:textSize="45dp"
+            android:textColor="#ff9ba5"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton4"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ok_button" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Speed and Catagorization"
+        android:id="@+id/textView21" />
+</LinearLayout>
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.08">
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+</LinearLayout>

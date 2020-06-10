@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Brain Drive</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_game_settings">Game Settings</string>
+    <string name="title_activity_game_list">Game List</string>
+    <string name="title_activity_startmath">Start Math</string>
+    <string name="title_activity_first_game">Math It</string>
+    <string name="title_activity_true">True</string>
+    <string name="title_activity_correct">correct</string>
+    <string name="title_activity_main2">Game Tabs</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_tablayout">tablayout</string>
+    <string name="title_activity_first__game__score">First_Game_Score</string>
+    <string name="title_activity_second__game__instruction">Second_Game_Instruction</string>
+    <string name="title_activity_third__game__instruction">Third_Game_Instruction</string>
+    <string name="title_activity_second__game">Second_Game</string>
+    <string name="title_activity_third__game">Third_Game</string>
+    <string name="title_activity_game__settings">Game_Settings</string>
+    <string name="title_activity_usersettings">usersettings</string>
+    <string name="title_activity_second_game_scor">Second_game_scor</string>
+    <string name="title_activity_third_game_scor">Third_game_scor</string>
+    <string name="title_activity_memorize_list">MemorizeList</string>
+    <string name="title_activity_catagorise_list">CatagoriseList</string>
+    <string name="title_activity_edible_category_game">EdibleCategoryGame</string>
+    <string name="title_activity_consumer_catagory_game">ConsumerCatagoryGame</string>
+    <string name="title_activity_human_category_game">HumanCategoryGame</string>
+    <string name="title_activity_consumer_instruction">ConsumerInstruction</string>
+    <string name="title_activity_edible_instruction">EdibleInstruction</string>
+    <string name="title_activity_human_instruction">HumanInstruction</string>
+    <string name="title_activity_starting_point">StartingPoint</string>
+    <string name="title_activity_mainy">MainyActivity</string>
+</resources>
