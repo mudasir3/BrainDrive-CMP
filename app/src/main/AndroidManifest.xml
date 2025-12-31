@@ -1,138 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ranashazib.braindrive" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name="com.braindrive.BrainDriveApplication"
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/brain"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BrainDrive"
+        tools:targetApi="35">
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:exported="true"
+            android:theme="@style/Theme.BrainDrive"
+            android:enableOnBackInvokedCallback="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".splash"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".GameList"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_game_list"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".Startmath"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_startmath"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".FirstGame"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".First_Game_Score"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_first__game__score"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".Second_Game_Instruction"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_second__game__instruction"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".Third_Game_Instruction"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".Second_Game"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".Third_Game"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".usersettings"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_usersettings"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".Second_game_scor"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_second_game_scor"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".Third_game_scor"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_third_game_scor"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".CatagoriseList"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_catagorise_list"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".EdibleCategoryGame"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_edible_category_game"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ConsumerCatagoryGame"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_consumer_catagory_game"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".HumanCategoryGame"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_human_category_game"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ConsumerInstruction"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_consumer_instruction"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".EdibleInstruction"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_edible_instruction"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".HumanInstruction"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_human_instruction"
-            android:screenOrientation="portrait" >
-        </activity>
-
     </application>
 
 </manifest>

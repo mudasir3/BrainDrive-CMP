@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent"  android:orientation="vertical"
-        tools:context="com.example.ranashazib.braindrive.Third_game_scor"
+        tools:context="com.example.ranashazib.braindrive.java.Third_game_scor"
         android:background="#f6f4ff"
         >
 
