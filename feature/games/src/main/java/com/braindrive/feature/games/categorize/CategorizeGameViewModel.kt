@@ -1,14 +1,14 @@
-package com.braindrive.feature.games.math
+package com.braindrive.feature.games.categorize
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.braindrive.core.domain.model.CategorizeQuestion
 import com.braindrive.core.domain.model.Difficulty
-import com.braindrive.core.domain.model.MathOperation
-import com.braindrive.core.domain.model.MathQuestion
-import com.braindrive.core.domain.usecase.GenerateMathQuestionUseCase
+import com.braindrive.core.domain.model.GameType
+import com.braindrive.core.domain.model.ItemCategory
+import com.braindrive.core.domain.usecase.GenerateCategorizeQuestionUseCase
 import com.braindrive.core.domain.usecase.SaveGameScoreUseCase
 import com.braindrive.core.domain.usecase.GetUserPreferencesUseCase
-import com.braindrive.core.domain.model.GameType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -19,15 +19,16 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class MathGameUiState(
-    val currentQuestion: MathQuestion? = null,
+data class CategorizeGameUiState(
+    val currentQuestion: CategorizeQuestion? = null,
     val score: Int = 0,
-    val timeRemaining: Long = 60000L, // 60 seconds
+    val timeRemaining: Long = 60000L,
     val isGameActive: Boolean = false,
     val showFeedback: FeedbackType? = null,
     val gameCompleted: Boolean = false,
     val playerName: String = "",
-    val difficulty: Difficulty = Difficulty.MEDIUM
+    val difficulty: Difficulty = Difficulty.MEDIUM,
+    val gameType: GameType = GameType.CATEGORIZE_EDIBLE
 )
 
 enum class FeedbackType {
@@ -35,51 +36,60 @@ enum class FeedbackType {
     INCORRECT
 }
 
-sealed class MathGameIntent {
-    data class StartGame(val difficulty: Difficulty) : MathGameIntent()
-    data class SelectOperation(val operation: MathOperation) : MathGameIntent()
-    object DismissFeedback : MathGameIntent()
-    object FinishGame : MathGameIntent()
+sealed class CategorizeGameIntent {
+    data class StartGame(val gameType: GameType, val difficulty: Difficulty) : CategorizeGameIntent()
+    data class SelectCategory(val category: ItemCategory) : CategorizeGameIntent()
+    object DismissFeedback : CategorizeGameIntent()
+    object FinishGame : CategorizeGameIntent()
 }
 
 @HiltViewModel
-class MathGameViewModel @Inject constructor(
-    private val generateMathQuestionUseCase: GenerateMathQuestionUseCase,
+class CategorizeGameViewModel @Inject constructor(
+    private val generateCategorizeQuestionUseCase: GenerateCategorizeQuestionUseCase,
     private val saveGameScoreUseCase: SaveGameScoreUseCase,
     private val getUserPreferencesUseCase: GetUserPreferencesUseCase
 ) : ViewModel() {
     
-    private val _uiState = MutableStateFlow(MathGameUiState())
-    val uiState: StateFlow<MathGameUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(CategorizeGameUiState())
+    val uiState: StateFlow<CategorizeGameUiState> = _uiState.asStateFlow()
     
     private var timerJob: Job? = null
     
-    fun handleIntent(intent: MathGameIntent) {
+    fun handleIntent(intent: CategorizeGameIntent) {
         when (intent) {
-            is MathGameIntent.StartGame -> startGame(intent.difficulty)
-            is MathGameIntent.SelectOperation -> checkAnswer(intent.operation)
-            is MathGameIntent.DismissFeedback -> dismissFeedback()
-            is MathGameIntent.FinishGame -> finishGame()
+            is CategorizeGameIntent.StartGame -> startGame(intent.gameType, intent.difficulty)
+            is CategorizeGameIntent.SelectCategory -> checkAnswer(intent.category)
+            is CategorizeGameIntent.DismissFeedback -> dismissFeedback()
+            is CategorizeGameIntent.FinishGame -> finishGame()
         }
     }
     
-    private fun startGame(difficulty: Difficulty) {
+    private fun startGame(gameType: GameType, difficulty: Difficulty) {
         viewModelScope.launch {
             val preferences = getUserPreferencesUseCase().first()
-            val timeLimit = when (difficulty) {
-                Difficulty.EASY -> 90000L // 90 seconds
-                Difficulty.MEDIUM -> 60000L // 60 seconds
-                Difficulty.HARD -> 45000L // 45 seconds
+            val category = when (gameType) {
+                GameType.CATEGORIZE_EDIBLE -> ItemCategory.EDIBLE
+                GameType.CATEGORIZE_CONSUMER -> ItemCategory.CONSUMER
+                GameType.CATEGORIZE_HUMAN -> ItemCategory.HUMAN
+                else -> ItemCategory.EDIBLE
             }
+            
+            val timeLimit = when (difficulty) {
+                Difficulty.EASY -> 90000L
+                Difficulty.MEDIUM -> 60000L
+                Difficulty.HARD -> 45000L
+            }
+            
             _uiState.value = _uiState.value.copy(
                 isGameActive = true,
                 gameCompleted = false,
                 score = 0,
                 timeRemaining = timeLimit,
                 playerName = preferences.userName.ifEmpty { "Player" },
-                difficulty = difficulty
+                difficulty = difficulty,
+                gameType = gameType
             )
-            generateNewQuestion()
+            generateNewQuestion(category, difficulty)
             startTimer()
         }
     }
@@ -99,27 +109,42 @@ class MathGameViewModel @Inject constructor(
         }
     }
     
-    private fun generateNewQuestion() {
-        val question = generateMathQuestionUseCase(_uiState.value.difficulty)
+    private fun generateNewQuestion(category: ItemCategory, difficulty: Difficulty) {
+        val question = generateCategorizeQuestionUseCase(category, difficulty)
         _uiState.value = _uiState.value.copy(
             currentQuestion = question,
             showFeedback = null
         )
     }
     
-    private fun checkAnswer(selectedOperation: MathOperation) {
+    private fun checkAnswer(selectedCategory: ItemCategory) {
         val currentQuestion = _uiState.value.currentQuestion ?: return
         
-        val isCorrect = currentQuestion.operation == selectedOperation
+        val isCorrect = currentQuestion.isCorrect(selectedCategory)
+        val points = if (isCorrect) {
+            when (_uiState.value.difficulty) {
+                Difficulty.EASY -> 1
+                Difficulty.MEDIUM -> 2
+                Difficulty.HARD -> 3
+            }
+        } else {
+            -1
+        }
         
         _uiState.value = _uiState.value.copy(
-            score = if (isCorrect) _uiState.value.score + 1 else _uiState.value.score - 1,
+            score = (_uiState.value.score + points).coerceAtLeast(0),
             showFeedback = if (isCorrect) FeedbackType.CORRECT else FeedbackType.INCORRECT
         )
         
         viewModelScope.launch {
-            delay(500)
-            generateNewQuestion()
+            delay(800)
+            val category = when (_uiState.value.gameType) {
+                GameType.CATEGORIZE_EDIBLE -> ItemCategory.EDIBLE
+                GameType.CATEGORIZE_CONSUMER -> ItemCategory.CONSUMER
+                GameType.CATEGORIZE_HUMAN -> ItemCategory.HUMAN
+                else -> ItemCategory.EDIBLE
+            }
+            generateNewQuestion(category, _uiState.value.difficulty)
         }
     }
     
@@ -136,7 +161,7 @@ class MathGameViewModel @Inject constructor(
                 com.braindrive.core.domain.model.GameScore(
                     playerName = _uiState.value.playerName,
                     score = finalScore,
-                    gameType = GameType.MATH
+                    gameType = _uiState.value.gameType
                 )
             )
         }

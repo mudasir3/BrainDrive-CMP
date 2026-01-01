@@ -22,6 +22,52 @@ android {
             useSupportLibrary = true
         }
     }
+    
+    flavorDimensions += "game"
+    productFlavors {
+        create("full") {
+            dimension = "game"
+            applicationIdSuffix = ""
+            versionNameSuffix = ""
+            resValue("string", "app_name", "BrainDrive")
+        }
+        create("mathGame") {
+            dimension = "game"
+            applicationIdSuffix = ".math"
+            versionNameSuffix = "-math"
+            resValue("string", "app_name", "Math It")
+        }
+        create("categorizeEdible") {
+            dimension = "game"
+            applicationIdSuffix = ".categorize.edible"
+            versionNameSuffix = "-edible"
+            resValue("string", "app_name", "Categorize - Edible")
+        }
+        create("categorizeConsumer") {
+            dimension = "game"
+            applicationIdSuffix = ".categorize.consumer"
+            versionNameSuffix = "-consumer"
+            resValue("string", "app_name", "Categorize - Consumer")
+        }
+        create("categorizeHuman") {
+            dimension = "game"
+            applicationIdSuffix = ".categorize.human"
+            versionNameSuffix = "-human"
+            resValue("string", "app_name", "Categorize - Human")
+        }
+        create("memoryGame1") {
+            dimension = "game"
+            applicationIdSuffix = ".memory.game1"
+            versionNameSuffix = "-memory1"
+            resValue("string", "app_name", "Memory Game 1")
+        }
+        create("memoryGame2") {
+            dimension = "game"
+            applicationIdSuffix = ".memory.game2"
+            versionNameSuffix = "-memory2"
+            resValue("string", "app_name", "Memory Game 2")
+        }
+    }
 
     buildTypes {
         release {

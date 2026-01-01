@@ -1,11 +1,10 @@
-package com.braindrive.feature.games.math
+package com.braindrive.feature.games.categorize
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,25 +20,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.braindrive.core.domain.model.Difficulty
-import com.braindrive.core.domain.model.MathOperation
-import com.braindrive.core.domain.model.MathQuestion
+import com.braindrive.core.domain.model.ItemCategory
 import com.braindrive.core.ui.theme.SuccessGreen
 import com.braindrive.core.ui.theme.ErrorRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MathGameScreen(
+fun CategorizeGameScreen(
     playerName: String,
-    difficulty: Difficulty,
+    gameType: com.braindrive.core.domain.model.GameType,
+    difficulty: com.braindrive.core.domain.model.Difficulty,
     onNavigateBack: () -> Unit,
     onGameComplete: (Int) -> Unit,
-    viewModel: MathGameViewModel = hiltViewModel()
+    viewModel: CategorizeGameViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     
-    LaunchedEffect(difficulty) {
-        viewModel.handleIntent(MathGameIntent.StartGame(difficulty))
+    LaunchedEffect(Unit) {
+        viewModel.handleIntent(CategorizeGameIntent.StartGame(gameType, difficulty))
     }
     
     LaunchedEffect(uiState.gameCompleted) {
@@ -51,10 +49,10 @@ fun MathGameScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Math It") },
+                title = { Text(getGameTitle(gameType)) },
                 navigationIcon = {
                     IconButton(onClick = {
-                        viewModel.handleIntent(MathGameIntent.FinishGame)
+                        viewModel.handleIntent(CategorizeGameIntent.FinishGame)
                         onNavigateBack()
                     }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -97,12 +95,15 @@ fun MathGameScreen(
                 
                 Spacer(modifier = Modifier.height(32.dp))
                 
-                // Operation Buttons
-                OperationButtons(
-                    onOperationSelected = { operation ->
-                        viewModel.handleIntent(MathGameIntent.SelectOperation(operation))
-                    }
-                )
+                // Category Buttons
+                uiState.currentQuestion?.let { question ->
+                    CategoryButtons(
+                        categories = question.options,
+                        onCategorySelected = { category ->
+                            viewModel.handleIntent(CategorizeGameIntent.SelectCategory(category))
+                        }
+                    )
+                }
             }
             
             // Feedback Overlay
@@ -110,6 +111,103 @@ fun MathGameScreen(
                 FeedbackOverlay(feedback)
             }
         }
+    }
+}
+
+fun getGameTitle(gameType: com.braindrive.core.domain.model.GameType): String {
+    return when (gameType) {
+        com.braindrive.core.domain.model.GameType.CATEGORIZE_EDIBLE -> "Categorize - Edible"
+        com.braindrive.core.domain.model.GameType.CATEGORIZE_CONSUMER -> "Categorize - Consumer"
+        com.braindrive.core.domain.model.GameType.CATEGORIZE_HUMAN -> "Categorize - Human"
+        else -> "Categorize"
+    }
+}
+
+@Composable
+fun QuestionCard(question: com.braindrive.core.domain.model.CategorizeQuestion) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = question.item.name,
+                style = MaterialTheme.typography.displayMedium,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Select the correct category",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
+@Composable
+fun CategoryButtons(
+    categories: List<ItemCategory>,
+    onCategorySelected: (ItemCategory) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        categories.forEach { category ->
+            CategoryButton(
+                category = category,
+                onClick = { onCategorySelected(category) },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}
+
+@Composable
+fun CategoryButton(
+    category: ItemCategory,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "button_pulse")
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.05f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1500, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "scale"
+    )
+    
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .height(70.dp)
+            .scale(scale),
+        shape = RoundedCornerShape(16.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        )
+    ) {
+        Text(
+            text = category.name,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
     }
 }
 
@@ -172,120 +270,15 @@ fun TimerCard(timeRemaining: Long) {
 }
 
 @Composable
-fun QuestionCard(question: MathQuestion) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "${question.number1} ? ${question.number2} = ${question.result.toInt()}",
-                style = MaterialTheme.typography.displayMedium,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Select the correct operation",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
-                textAlign = TextAlign.Center
-            )
-        }
-    }
-}
-
-@Composable
-fun OperationButtons(
-    onOperationSelected: (MathOperation) -> Unit
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        OperationButton(
-            operation = MathOperation.ADDITION,
-            symbol = "+",
-            onClick = { onOperationSelected(MathOperation.ADDITION) },
-            modifier = Modifier.weight(1f)
-        )
-        OperationButton(
-            operation = MathOperation.SUBTRACTION,
-            symbol = "-",
-            onClick = { onOperationSelected(MathOperation.SUBTRACTION) },
-            modifier = Modifier.weight(1f)
-        )
-        OperationButton(
-            operation = MathOperation.MULTIPLICATION,
-            symbol = "×",
-            onClick = { onOperationSelected(MathOperation.MULTIPLICATION) },
-            modifier = Modifier.weight(1f)
-        )
-        OperationButton(
-            operation = MathOperation.DIVISION,
-            symbol = "÷",
-            onClick = { onOperationSelected(MathOperation.DIVISION) },
-            modifier = Modifier.weight(1f)
-        )
-    }
-}
-
-@Composable
-fun OperationButton(
-    operation: MathOperation,
-    symbol: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val infiniteTransition = rememberInfiniteTransition(label = "button_pulse")
-    val scale by infiniteTransition.animateFloat(
-        initialValue = 1f,
-        targetValue = 1.1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "scale"
-    )
-    
-    Button(
-        onClick = onClick,
-        modifier = modifier
-            .height(80.dp)
-            .scale(scale),
-        shape = RoundedCornerShape(16.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        )
-    ) {
-        Text(
-            text = symbol,
-            style = MaterialTheme.typography.displaySmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onPrimary
-        )
-    }
-}
-
-@Composable
-fun FeedbackOverlay(feedback: FeedbackType) {
+fun FeedbackOverlay(feedback: com.braindrive.feature.games.categorize.FeedbackType) {
     val color = when (feedback) {
-        FeedbackType.CORRECT -> SuccessGreen
-        FeedbackType.INCORRECT -> ErrorRed
+        com.braindrive.feature.games.categorize.FeedbackType.CORRECT -> SuccessGreen
+        com.braindrive.feature.games.categorize.FeedbackType.INCORRECT -> ErrorRed
     }
     
     val text = when (feedback) {
-        FeedbackType.CORRECT -> "✓ Correct!"
-        FeedbackType.INCORRECT -> "✗ Incorrect"
+        com.braindrive.feature.games.categorize.FeedbackType.CORRECT -> "✓ Correct!"
+        com.braindrive.feature.games.categorize.FeedbackType.INCORRECT -> "✗ Incorrect"
     }
     
     Box(
@@ -298,7 +291,7 @@ fun FeedbackOverlay(feedback: FeedbackType) {
             modifier = Modifier
                 .width(200.dp)
                 .height(200.dp),
-            shape = CircleShape,
+            shape = androidx.compose.foundation.shape.CircleShape,
             colors = CardDefaults.cardColors(
                 containerColor = color
             )
